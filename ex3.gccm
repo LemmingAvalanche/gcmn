@@ -1,0 +1,36 @@
+Source: eddfcd8eced9b9f840491064b35a3956f959fd12 in Git
+Change-comments: Moved to footnotes
+Markup-comment: `‡` is the same as `†` except that one level of
+  parentheses is removed. If `‡` was inlined (the text was put back), then
+  one would have to add one level of parentheses.
+    Also, I don’t bother with the names of the footnotes, `1` and `2`;
+  the footnotes are “anonymous”, which means that they correspond to the
+  brackets in the order that they appear in the text (`[1]` and then
+  `[2]`).
+
+---
+
+attr: fix instructions on how to check attrs
+
+The instructions in attr.h describing what functions to call to check
+attributes is missing the index as the first argument to
+git_check_attr(), as well as tree_oid as the second argument.
+
+When 7a400a2c[1] started passing an index_state instance to
+git_check_attr(), it forgot to update the API documentation in
+Documentation/technical/api-gitattributes.txt. Later, 3a1b3415[2] moved
+the API documentation to attr.h as a comment, but still left out the
+index_state as an argument.
+
+In 47cfc9b (attr: add flag `--source` to work with tree-ish 2023-01-14)
+added tree_oid as an optional parameter but was not added to the docs in
+attr.h
+
+Fix this to make the documentation in the comment consistent with the
+actual function signature.
+
+‡: attr: remove an implicit dependency on the_index, 2018-08-13
+‡: attr: move doc to attr.h, 2019-11-17
+
+Signed-off-by: John Cai <johncai86@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
