@@ -1,1 +1,1 @@
-gcmm—Git Commit Message Markup (no TM)
+gcmn—Git Commit Message Notation (no TM)
