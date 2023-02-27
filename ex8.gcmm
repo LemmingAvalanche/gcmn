@@ -1,0 +1,68 @@
+Source: d9fd674c8b26c376b37e02d974b92033acb99732 in Git
+Change-comment: Deleted the line “(Line break added here for the commit
+    message formatting, only.)” and replaced with `[_]` which points to:
+    `⋈: lines-change` which provides the same information, but in a structured
+    format. Using `_` as the reference since it is the only one in the
+    document (message), so the name doesn’t matter.
+
+    The choice of `⋈` is arbitrary/random/I-can-type-it-easily.
+
+    This `⋈` is used to declare metadata. Neat, right? I can use it to
+    declare metadata for any block. `⋈` means metadata for the block
+    following the reference (the code block since that is what comes
+    right after the `[_]`).
+
+---
+
+bundle: verify using check_connected()
+
+When Git verifies a bundle to see if it is safe for unbundling, it first
+looks to see if the prerequisite commits are in the object store. This
+is an easy way to "fail fast" but it is not a sufficient check for
+updating refs that guarantee closure under reachability. There could
+still be issues if those commits are not reachable from the repository's
+references. The repository only has guarantees that its object store is
+closed under reachability for the objects that are reachable from
+references.
+
+Thus, the code in verify_bundle() has previously had the additional
+check that all prerequisite commits are reachable from repository
+references. This is done via a revision walk from all references,
+stopping only if all prerequisite commits are discovered or all commits
+are walked. This uses a custom walk to verify_bundle().
+
+This check is more strict than what Git applies to fetched pack-files.
+In the fetch case, Git guarantees that the new references are closed
+under reachability by walking from the new references until walking
+commits that are reachable from repository refs. This is done through
+the well-used check_connected() method.
+
+To better align with the restrictions required by 'git fetch',
+reimplement this check in verify_bundle() to use check_connected(). This
+also simplifies the code significantly.
+
+The previous change added a test that verified the behavior of 'git
+bundle verify' and 'git bundle unbundle' in this case, and the error
+messages looked like this:
+
+    error: Could not read <missing-commit>
+    fatal: Failed to traverse parents of commit <extant-commit>
+
+However, by changing the revision walk slightly within check_connected()
+and using its quiet mode, we can omit those messages. Instead, we get
+only this message, tailored to describing the current state of the
+repository:[_]
+
+    error: some prerequisite commits exist in the object store,
+           but are not connected to the repository's history
+
+While this message does not include any object IDs, there is no
+guarantee that those object IDs would help the user diagnose what is
+going on, as they could be separated from the prerequisite commits by
+some distance. At minimum, this situation describes the situation in a
+more informative way than the previous error messages.
+
+⋈: lines-change
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>

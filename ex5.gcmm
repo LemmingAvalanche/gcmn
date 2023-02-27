@@ -1,0 +1,38 @@
+Source: 20b813d7d3dc576aa58de22da2450b49116945bf in Git
+Change-comment: Replaced bullet list with footnotes. Something interesting
+    here is that some of these are explicitly “mentione”: “Since [1]”. Should
+    they be treated differently than e.g. “[…] migrations for stash[3]”?
+
+---
+
+add: remove "add.interactive.useBuiltin" & Perl "git add--interactive"
+
+Since [1] first released with Git v2.37.0 the built-in version of "add
+-i" has been the default. That built-in implementation was added in
+[2], first released with Git v2.25.0.
+
+At this point enough time has passed to allow for finding any
+remaining bugs in this new implementation, so let's remove the
+fallback code.
+
+As with similar migrations for "stash"[3] and "rebase"[4] we're
+keeping a mention of "add.interactive.useBuiltin" in the
+documentation, but adding a warning() to notify any outstanding users
+that the built-in is now the default. As with [5] and [6] we should
+follow-up in the future and eventually remove that warning.
+
+† 1: 0527ccb1b55 (add -i: default to the built-in implementation,
+   2021-11-30)
+† 2: f83dff60a78 (Start to implement a built-in version of `git add
+   --interactive`, 2019-11-13)
+† 3: 8a2cd3f5123 (stash: remove the stash.useBuiltin setting,
+   2020-03-03)
+† 4: d03ebd411c6 (rebase: remove the rebase.useBuiltin setting,
+   2019-03-18)
+† 5: deeaf5ee077 (stash: remove documentation for `stash.useBuiltin`,
+   2022-01-27)
+† 6: 9bcde4d5314 (rebase: remove transitory rebase.useBuiltin setting &
+   env, 2021-03-23)
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>

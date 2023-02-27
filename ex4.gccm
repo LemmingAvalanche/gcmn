@@ -1,0 +1,14 @@
+Source: 06bca9708ac86d286a6f5265ff0e6c532f44c657 in Git
+Change-comment: Just replace `*` (asterisk) with `★` (a star)
+
+---
+
+Merge branch 'ab/retire-scripted-add-p'
+
+Finally retire the scripted "git add -p/-i" implementation and have
+everybody use the one reimplemented in C.
+
+★ ab/retire-scripted-add-p:
+  docs & comments: replace mentions of "git-add--interactive.perl"
+  add API: remove run_add_interactive() wrapper function
+  add: remove "add.interactive.useBuiltin" & Perl "git add--interactive"

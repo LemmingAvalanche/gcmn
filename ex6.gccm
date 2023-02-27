@@ -1,0 +1,37 @@
+Source: 93d52ed050f5613897b73e75961df5c589d63a4b
+Change-comment: Footnotes. Noticed “anonymous” footnotes both when declared
+    (underlines) and when defined (just a colon). Does the colon look nice?
+    Maybe something more lightweight? Just a period, perhaps?
+
+    On second thought: “anonyomous” footnotes should be a writing convenience,
+    not something that is used in the final output.
+
+---
+
+userdiff: support Java sealed classes
+
+A new kind of class was added in Java 17 -- sealed classes.[_]  This
+feature includes several new keywords that may appear in a declaration
+of a class.  New modifiers before name of the class: "sealed" and
+"non-sealed", and a clause after name of the class marked by keyword
+"permits".
+
+The current set of regular expressions in userdiff.c already allows the
+modifier "sealed" and the "permits" clause, but not the modifier
+"non-sealed", which is the first hyphenated keyword in Java.[_]  Allow
+hyphen in the words that precede the name of type to match the
+"non-sealed" modifier.
+
+In new input file "java-sealed" for the test t4018-diff-funcname.sh, use
+a Java code comment for the marker "RIGHT".  This workaround is needed,
+because the name of the sealed class appears on the line of code that
+has the "ChangeMe" marker.
+
+†: Detailed description in "JEP 409: Sealed Classes"
+    https://openjdk.org/jeps/409
+†: "JEP draft: Keyword Management for the Java Language"
+    https://openjdk.org/jeps/8223002
+
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+Reviewed-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>

@@ -1,0 +1,21 @@
+Source: 1f34e0cd3d799acb5118b3276dde389821bffdd4 in Git
+Change-comment: experimenting with email symbol for email archive
+    links. Could maybe just use a URL symbol.
+
+---
+
+.gitattributes: include `text` attribute for eol attributes
+
+The standard advice for text file eol endings in the .gitattributes file
+was updated in e28eae3184 (gitattributes: Document the unified "auto"
+handling, 2016-08-26) with a recent clarification in 8c591dbfce (docs:
+correct documentation about eol attribute, 2022-01-11), with a follow
+up comment by the original author in [1] confirming the use of the eol
+attribute in conjunction with the text attribute.
+
+Update Git's .gitattributes file to reflect our own advice.
+
+📫 1: https://lore.kernel.org/git/?q=%3C20220216115239.uo2ie3flaqo3nf2d%40tb-raspi4%3E.
+
+Signed-off-by: Philip Oakley <philipoakley@iee.email>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
